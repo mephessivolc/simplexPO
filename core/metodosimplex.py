@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from django.conf import settings
+
 import numpy as np
 np.set_printoptions(precision=3)
 
@@ -385,7 +387,8 @@ lfbossa@gmail.com, 2016
                 start = self.output.index('html=') + len('html=')
                 end = self.output.index('.html') + len('.html')
                 filename = self.output[start:end]
-                self.html = open(filename, 'w', encoding='utf-8')
+                filepath = settings.TEMPLATE_TMP +'/'+filename
+                self.html = open(filepath, 'w', encoding='utf-8')
                 self.html.write(initial)
 
         if mode=='fechar':
@@ -432,9 +435,16 @@ def htmlmatrix(a):
     if len(a.shape) > 2:
         raise ValueError('htmlmatrix can at most display two dimensions')
     lines = str(a).replace('['," ").replace(']', '').splitlines()
-    rv = ['<tr>']
-    rv += ["<td>".join(l.split()) + '</td>' for l in lines]
-    return '</tr>'.join(rv)
+    texto = ''
+    for l in lines:
+        texto += '<tr>\n'
+        for info in l.split():
+            texto += "<td>{}</td> ".format(info)
+        texto += '</tr>\n'
+
+    return texto
+    # rv += ["<td>".join(l.split()) + '</td>' for l in lines]
+
 
 class LinhasLD(Exception):
     def __init__(self, linhas):

@@ -1,2 +1,6 @@
 devSimplex/
 Pesquisa\ Operacional/
+
+
+__pycache__/
+migrations/

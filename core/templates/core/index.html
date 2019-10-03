@@ -1,0 +1,14 @@
+{% load static %}
+
+{% block contents %}
+<div><h1>Simplex</h1></div>
+<form name="form" action='{% url "getsimplex" %}' method="GET" class=''>
+    {% csrf_token %}
+   	<div id="label1" >Número de variáveis:</div>
+   	<input type="text" id="var" name="var" value="">
+
+   	<input type='text' id='sa' name='sa' value=''>
+    <input type="submit" value='Enviar' >
+</form>
+
+{% endblock %}

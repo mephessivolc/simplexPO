@@ -1,0 +1,45 @@
+{% load static %}
+
+{% block contents %}
+<div><h1>Simplex</h1></div>
+<form name="form" action='{% url "resolved" %}' method="get" class=''>
+    {% csrf_token %}
+
+    <input type="hidden" name="var" value="{{ var }}">
+    <input type="hidden" name="sa" value="{{ sa }}">
+    <table>
+        <tr>
+            <td>z = </td>
+           	{% for insert_var in insert_vars %}
+                <td><input type="text" id="var{{ forloop.counter0 }}" name="var{{ forloop.counter0 }}" value=''> x<small>{{ forloop.counter }}</small> </td>
+                {% if not forloop.last %}
+                    <td> + </td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th colspan="{{ number_var }}">Sujeito a</th>
+            <th>b</th>
+        </tr>
+        {% for line in lines %}
+            <tr>
+                {% for insert_var in insert_vars %}
+                    <td><input type="text" name="sa_{{ line }}_{{ forloop.counter0 }}" id="sa_{{ line }}_{{ forloop.counter0 }}" value=''> x
+                        <small>{{ forloop.counter }}</small> </td>
+                    {% if not forloop.last %}
+                        <td> + </td>
+                    {% else %}
+                        <td> =  </td>
+                        <td><input type="text" name="b{{ line }}" id='b{{ line }}' value=""></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+    <input type="submit" name="" value="Enviar">
+</form>
+
+{% endblock %}
