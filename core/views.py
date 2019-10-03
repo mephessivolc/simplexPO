@@ -62,8 +62,6 @@ class ResolvedSimplexView(generic.TemplateView):
         for resp in range(int(self.request.GET.get('sa'))):
             b.append(self.request.GET.get('b{}'.format(resp)))
 
-        print(b)
-
         prob = SimplexPrimal(A,b,c, output='html=simplex.html,minimal')
         prob.resolver()
 
